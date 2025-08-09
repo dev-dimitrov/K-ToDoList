@@ -3,6 +3,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
@@ -17,18 +18,16 @@ public class ControllerToDo  implements Initializable {
     private TextField inputTask;
 
     @FXML
-    private ListView<String> taskList;
+    private ListView<CheckBox> taskList;
 
-    @FXML
-    private List<String> sample = List.of("Wash the dishes", "Take out the trash", "Water the plants", "Vacuum the floor", "Walk the dog", "Clean the bathroom", "Fold the clothes", "Sweep the floor", "Feed the cat", "Organize the desk");
-
+    // @FXML
+    // private List<String> sample = List.of("Wash the dishes", "Take out the trash", "Water the plants", "Vacuum the floor", "Walk the dog", "Clean the bathroom", "Fold the clothes", "Sweep the floor", "Feed the cat", "Organize the desk");
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        taskList.getItems().addAll(sample);
-        taskList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+        taskList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<CheckBox>() {
             @Override
-            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-
+            public void changed(ObservableValue<? extends CheckBox> observableValue, CheckBox s, CheckBox t1) {
+                // manage here the selected task (This is not implying to check the checkbox)
             }
         });
     }
@@ -41,6 +40,8 @@ public class ControllerToDo  implements Initializable {
 
 
     public void addTask(String task){
-        taskList.getItems().add(task);
+        CheckBox b = new CheckBox();
+        b.setText(task);
+        taskList.getItems().add(b);
     }
 }
