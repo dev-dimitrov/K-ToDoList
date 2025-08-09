@@ -3,6 +3,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.NodeOrientation;
+import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -41,6 +43,10 @@ public class ControllerToDo  implements Initializable {
 
     public void addTask(String task){
         CheckBox b = new CheckBox();
+        b.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+        b.setPrefWidth(170);
+        System.out.println(b.getPrefHeight());
+        b.setAlignment(Pos.CENTER_RIGHT);
         b.setText(task);
         taskList.getItems().add(b);
     }

@@ -14,7 +14,7 @@ public class LauncherToDo extends Application {
             primaryStage.setScene(scene);
             primaryStage.show();
             primaryStage.setResizable(false);
-
+            System.out.println("Running, running!!");
         } catch(Exception e) {
             e.printStackTrace();
         }
