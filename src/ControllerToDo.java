@@ -26,6 +26,7 @@ public class ControllerToDo  implements Initializable {
     // private List<String> sample = List.of("Wash the dishes", "Take out the trash", "Water the plants", "Vacuum the floor", "Walk the dog", "Clean the bathroom", "Fold the clothes", "Sweep the floor", "Feed the cat", "Organize the desk");
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        System.out.println("Al empezar: "+taskList.getStyle());
         taskList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<CheckBox>() {
             @Override
             public void changed(ObservableValue<? extends CheckBox> observableValue, CheckBox s, CheckBox t1) {
@@ -45,9 +46,9 @@ public class ControllerToDo  implements Initializable {
         CheckBox b = new CheckBox();
         b.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
         b.setPrefWidth(170);
-        System.out.println(b.getPrefHeight());
         b.setAlignment(Pos.CENTER_RIGHT);
         b.setText(task);
         taskList.getItems().add(b);
+        System.out.println("Al meter un checkbox: "+taskList.getStyle());
     }
 }
