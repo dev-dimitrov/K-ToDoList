@@ -3,8 +3,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -18,6 +17,18 @@ public class ControllerToDo  implements Initializable {
 
     @FXML
     private ListView<Task> taskList;
+
+    @FXML
+    private Label titleLabel;
+
+    @FXML
+    private Label creationLabel;
+
+    @FXML
+    private TextArea descTextArea;
+
+    @FXML
+    private Button saveButton;
 
     // @FXML
     // private List<String> sample = List.of("Wash the dishes", "Take out the trash", "Water the plants", "Vacuum the floor", "Walk the dog", "Clean the bathroom", "Fold the clothes", "Sweep the floor", "Feed the cat", "Organize the desk");
