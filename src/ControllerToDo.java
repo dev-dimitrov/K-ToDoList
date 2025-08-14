@@ -30,6 +30,9 @@ public class ControllerToDo  implements Initializable {
     @FXML
     private Button saveButton;
 
+    @FXML
+    private Button markAsDoneButton;
+
     // @FXML
     // private List<String> sample = List.of("Wash the dishes", "Take out the trash", "Water the plants", "Vacuum the floor", "Walk the dog", "Clean the bathroom", "Fold the clothes", "Sweep the floor", "Feed the cat", "Organize the desk");
     @Override
@@ -64,5 +67,6 @@ public class ControllerToDo  implements Initializable {
         creationLabel.setVisible(t);
         descTextArea.setVisible(t);
         saveButton.setVisible(t);
+        markAsDoneButton.setVisible(t);
     }
 }
