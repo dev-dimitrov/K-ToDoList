@@ -1,7 +1,7 @@
 import java.time.LocalDateTime;
 
 public class Task {
-    private String title;
+    public String title;
     private String description;
     private LocalDateTime creation;
 
@@ -15,4 +15,6 @@ public class Task {
     public String toString(){
         return title;
     }
+
+
 }
