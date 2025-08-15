@@ -33,6 +33,10 @@ public class ControllerToDo  implements Initializable {
     @FXML
     private Button markAsDoneButton;
 
+
+    @FXML
+    private Task selectedTask;
+
     // @FXML
     // private List<String> sample = List.of("Wash the dishes", "Take out the trash", "Water the plants", "Vacuum the floor", "Walk the dog", "Clean the bathroom", "Fold the clothes", "Sweep the floor", "Feed the cat", "Organize the desk");
     @Override
@@ -42,6 +46,7 @@ public class ControllerToDo  implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Task> observableValue, Task previous, Task selected) {
                 // manage here the selected task (This is not implying to check the checkbox)
+                selectedTask = selected;
                 titleLabel.setText(selected.title);
                 descTextArea.setText(selected.description);
                 creationLabel.setText("Created on: "+selected.getCreationDate());
@@ -68,5 +73,9 @@ public class ControllerToDo  implements Initializable {
         descTextArea.setVisible(t);
         saveButton.setVisible(t);
         markAsDoneButton.setVisible(t);
+    }
+
+    public void saveTask(ActionEvent e) {
+        selectedTask.description = descTextArea.getText();
     }
 }
