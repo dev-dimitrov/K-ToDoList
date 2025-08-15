@@ -5,8 +5,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
+import java.io.*;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 // Most of this is provisional, the idea is to try to make a ListView of Checkbox instead of String
@@ -33,7 +36,6 @@ public class ControllerToDo  implements Initializable {
     @FXML
     private Button markAsDoneButton;
 
-
     @FXML
     private Task selectedTask;
 
@@ -42,6 +44,7 @@ public class ControllerToDo  implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         toggleItems(false);
+        loadTasks();
         taskList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Task>() {
             @Override
             public void changed(ObservableValue<? extends Task> observableValue, Task previous, Task selected) {
@@ -75,7 +78,25 @@ public class ControllerToDo  implements Initializable {
         markAsDoneButton.setVisible(t);
     }
 
-    public void saveTask(ActionEvent e) {
+    public void saveTasks(ActionEvent e) {
         selectedTask.description = descTextArea.getText();
+        try(ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream("tasks.bin"))){
+            // Make it ArrayList first bc it is complicated to save an ObservableList.
+            List<Task> l = new ArrayList<>(taskList.getItems());
+            o.writeObject(l);
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void loadTasks(){
+        try(ObjectInputStream o = new ObjectInputStream(new FileInputStream("tasks.bin"))){
+            List<Task> l = (ArrayList<Task>)o.readObject();
+            taskList.getItems().addAll(l);
+        }
+        catch(IOException | ClassNotFoundException ex){
+            ex.printStackTrace();
+        }
     }
 }
