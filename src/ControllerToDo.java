@@ -38,7 +38,7 @@ public class ControllerToDo  implements Initializable {
 
     @FXML
     private Task selectedTask;
-
+    
     // @FXML
     // private List<String> sample = List.of("Wash the dishes", "Take out the trash", "Water the plants", "Vacuum the floor", "Walk the dog", "Clean the bathroom", "Fold the clothes", "Sweep the floor", "Feed the cat", "Organize the desk");
     @Override

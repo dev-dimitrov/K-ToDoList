@@ -22,9 +22,9 @@
             <Font name="System Bold" size="26.0" />
          </font>
       </Label>
-      <Label fx:id="creationLabel" layoutX="233.0" layoutY="86.0" prefHeight="18.0" prefWidth="125.0" text="Created on: " />
+      <Label fx:id="creationLabel" layoutX="233.0" layoutY="86.0" prefHeight="18.0" prefWidth="213.0" text="Created on: " />
       <TextArea fx:id="descTextArea" layoutX="233.0" layoutY="104.0" prefHeight="200.0" prefWidth="346.0" promptText="Write here the description of the task" wrapText="true" />
-      <Button fx:id="saveButton" layoutX="477.0" layoutY="322.0" mnemonicParsing="false" onAction="#saveTasks" prefHeight="26.0" prefWidth="101.0" text="Save changes" />
-      <Button fx:id="markAsDoneButton" layoutX="370.0" layoutY="322.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="94.0" text="Mark as done" />
+      <Button fx:id="saveButton" layoutX="233.0" layoutY="322.0" mnemonicParsing="false" onAction="#saveTasks" prefHeight="26.0" prefWidth="101.0" text="Save changes" />
+      <Button fx:id="markAsDoneButton" layoutX="342.0" layoutY="322.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="102.0" text="Mark as done" />
    </children>
 </AnchorPane>
