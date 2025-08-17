@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-// Most of this is provisional, the idea is to try to make a ListView of Checkbox instead of String
-
 public class ControllerToDo  implements Initializable {
     @FXML
     private TextField inputTask;
@@ -38,6 +36,9 @@ public class ControllerToDo  implements Initializable {
 
     @FXML
     private Task selectedTask;
+
+    @FXML
+    private Label statusLabel;
     
     // @FXML
     // private List<String> sample = List.of("Wash the dishes", "Take out the trash", "Water the plants", "Vacuum the floor", "Walk the dog", "Clean the bathroom", "Fold the clothes", "Sweep the floor", "Feed the cat", "Organize the desk");
@@ -76,6 +77,7 @@ public class ControllerToDo  implements Initializable {
         descTextArea.setVisible(t);
         saveButton.setVisible(t);
         markAsDoneButton.setVisible(t);
+        statusLabel.setVisible(false);
     }
 
     public void saveTasks(ActionEvent e) {
@@ -87,7 +89,9 @@ public class ControllerToDo  implements Initializable {
         }
         catch (IOException ex) {
             ex.printStackTrace();
+            showStatus("Saving failed","#b80f04");
         }
+        showStatus("Changes  saved!","#04a429");
     }
 
     public void loadTasks(){
@@ -98,5 +102,12 @@ public class ControllerToDo  implements Initializable {
         catch(IOException | ClassNotFoundException ex){
             ex.printStackTrace();
         }
+    }
+
+    public void showStatus(String msg, String hexColor){
+        statusLabel.setVisible(false);
+        statusLabel.setText(msg);
+        statusLabel.setStyle("-fx-text-fill: "+hexColor);
+        statusLabel.setVisible(true);
     }
 }
