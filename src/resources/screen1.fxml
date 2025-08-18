@@ -31,5 +31,6 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
+      <Button fx:id="toggleButton" layoutX="24.0" layoutY="359.0" mnemonicParsing="false" onAction="#switchTasksList" prefHeight="26.0" prefWidth="84.0" text="Show done" />
    </children>
 </AnchorPane>

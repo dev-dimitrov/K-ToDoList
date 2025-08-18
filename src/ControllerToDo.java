@@ -40,21 +40,32 @@ public class ControllerToDo  implements Initializable {
     @FXML
     private Label statusLabel;
     
+    @FXML
+    private Button toggleButton;
+
+    private ArrayList<ArrayList<Task>> tasks; // 0 index is saving to do tasks and 1 done tasks
+
+    private boolean todoShowing;
+
     // @FXML
     // private List<String> sample = List.of("Wash the dishes", "Take out the trash", "Water the plants", "Vacuum the floor", "Walk the dog", "Clean the bathroom", "Fold the clothes", "Sweep the floor", "Feed the cat", "Organize the desk");
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        todoShowing = true;
         toggleItems(false);
-        loadTasks();
+        loadTasks("tasks.bin");
         taskList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Task>() {
             @Override
             public void changed(ObservableValue<? extends Task> observableValue, Task previous, Task selected) {
+                System.out.println("showing todo? "+todoShowing);
                 // manage here the selected task (This is not implying to check the checkbox)
-                selectedTask = selected;
-                titleLabel.setText(selected.title);
-                descTextArea.setText(selected.description);
-                creationLabel.setText("Created on: "+selected.getCreationDate());
-                toggleItems(true);
+                if(selected != null){
+                    selectedTask = selected;
+                    titleLabel.setText(selected.title);
+                    descTextArea.setText(selected.description);
+                    creationLabel.setText("Created on: "+selected.getCreationDate());
+                    toggleItems(true);
+                }
             }
         });
     }
@@ -68,6 +79,12 @@ public class ControllerToDo  implements Initializable {
 
     public void addTask(String task){
         Task t = new Task(task,"No desc", LocalDateTime.now());
+        if(todoShowing){
+            tasks.get(0).add(t);
+        }
+        else{
+            tasks.get(1).add(t);
+        }
         taskList.getItems().add(t);
     }
 
@@ -85,7 +102,15 @@ public class ControllerToDo  implements Initializable {
         try(ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream("tasks.bin"))){
             // Make it ArrayList first bc it is complicated to save an ObservableList.
             List<Task> l = new ArrayList<>(taskList.getItems());
-            o.writeObject(l);
+            if(todoShowing){
+                tasks.get(0).clear();
+                tasks.get(0).addAll(l);
+            }
+            else{
+                tasks.get(1).clear();
+                tasks.get(1).addAll(l);
+            }
+            o.writeObject(tasks);
         }
         catch (IOException ex) {
             ex.printStackTrace();
@@ -94,12 +119,22 @@ public class ControllerToDo  implements Initializable {
         showStatus("Changes  saved!","#04a429");
     }
 
-    public void loadTasks(){
+    public void loadTasks(String fileName){
         try(ObjectInputStream o = new ObjectInputStream(new FileInputStream("tasks.bin"))){
-            List<Task> l = (ArrayList<Task>)o.readObject();
-            taskList.getItems().addAll(l);
+            ArrayList<ArrayList<Task>> l = (ArrayList<ArrayList<Task>>)o.readObject();
+            tasks = l;
+
+            if(todoShowing){
+                taskList.getItems().addAll(l.get(0));
+            }
+            else{
+                taskList.getItems().addAll(l.get(1));
+            }
         }
         catch(IOException | ClassNotFoundException ex){
+            tasks = new ArrayList<>();
+            tasks.add(new ArrayList<>());
+            tasks.add(new ArrayList<>());
             ex.printStackTrace();
         }
     }
@@ -109,5 +144,25 @@ public class ControllerToDo  implements Initializable {
         statusLabel.setText(msg);
         statusLabel.setStyle("-fx-text-fill: "+hexColor);
         statusLabel.setVisible(true);
+    }
+
+    public void switchTasksList(ActionEvent e){
+        toggleItems(false);
+        String currentMode = toggleButton.getText();
+        toggleButton.setText(currentMode.equals("Show done") ? "Show to do" : "Show done");
+        taskList.getItems().clear();
+        if(currentMode.equals("Show to do")){
+            taskList.getItems().addAll(tasks.get(0));
+            toggleButton.setText("Show done");
+            inputTask.setDisable(false);
+            todoShowing = true;
+        }
+        else{
+            taskList.getItems().addAll(tasks.get(1));
+            toggleButton.setText("Show to do");
+            inputTask.setDisable(true);
+            todoShowing = false;
+
+        }
     }
 }
