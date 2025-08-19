@@ -59,6 +59,7 @@ public class ControllerToDo  implements Initializable {
             public void changed(ObservableValue<? extends Task> observableValue, Task previous, Task selected) {
                 // manage here the selected task (This is not implying to check the checkbox)
                 System.out.println("Current selected: "+selected);
+                System.out.println("Previous selected: "+previous);
                 if(selected != null){
                     selectedTask = selected;
                     titleLabel.setText(selected.title);
@@ -195,7 +196,7 @@ public class ControllerToDo  implements Initializable {
         taskList.getItems().remove(aux);
         tasks.get(0).remove(aux);
         tasks.get(1).add(aux);
-        toggleItems(false);
+        //toggleItems(false);
 
         showStatus("Moved to done list!","#04a429");
     }
@@ -205,7 +206,7 @@ public class ControllerToDo  implements Initializable {
         taskList.getItems().remove(aux);
         tasks.get(1).remove(aux);
         tasks.get(0).add(aux);
-        toggleItems(false);
+        //toggleItems(false);
 
         showStatus("Moved to do list!","#04a429");
 
