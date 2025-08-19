@@ -25,11 +25,12 @@
       <Label fx:id="creationLabel" layoutX="233.0" layoutY="86.0" prefHeight="18.0" prefWidth="213.0" text="Created on: " />
       <TextArea fx:id="descTextArea" layoutX="233.0" layoutY="104.0" prefHeight="200.0" prefWidth="346.0" promptText="Write here the description of the task" wrapText="true" />
       <Button fx:id="saveButton" layoutX="233.0" layoutY="322.0" mnemonicParsing="false" onAction="#saveTasks" prefHeight="26.0" prefWidth="101.0" text="Save changes" />
-      <Button fx:id="markAsDoneButton" layoutX="342.0" layoutY="322.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="102.0" text="Mark as done" />
-      <Label fx:id="statusLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="446.0" layoutY="326.0" prefHeight="18.0" prefWidth="131.0" text="statusLabel">
+      <Button fx:id="markAsDoneButton" layoutX="342.0" layoutY="322.0" mnemonicParsing="false" onAction="#markAsDone" prefHeight="26.0" prefWidth="102.0" text="Mark as done" />
+      <Label fx:id="statusLabel" contentDisplay="CENTER" layoutX="124.0" layoutY="363.0" prefHeight="18.0" prefWidth="142.0" text="statusLabel">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
+      <Button fx:id="toggleButton" layoutX="24.0" layoutY="359.0" mnemonicParsing="false" onAction="#switchTasksList" prefHeight="26.0" prefWidth="84.0" text="Show done" />
    </children>
 </AnchorPane>
