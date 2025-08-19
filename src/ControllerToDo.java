@@ -43,7 +43,7 @@ public class ControllerToDo  implements Initializable {
     @FXML
     private Button toggleButton;
 
-    private ArrayList<ArrayList<Task>> tasks; // 0 index is saving to do tasks and 1 done tasks
+    private ArrayList<ArrayList<Task>> tasks; // 0 index is for saving to do tasks and 1 done tasks
 
     private boolean todoShowing;
 
@@ -57,8 +57,8 @@ public class ControllerToDo  implements Initializable {
         taskList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Task>() {
             @Override
             public void changed(ObservableValue<? extends Task> observableValue, Task previous, Task selected) {
-                System.out.println("showing todo? "+todoShowing);
                 // manage here the selected task (This is not implying to check the checkbox)
+                System.out.println("Current selected: "+selected);
                 if(selected != null){
                     selectedTask = selected;
                     titleLabel.setText(selected.title);
@@ -92,9 +92,29 @@ public class ControllerToDo  implements Initializable {
         titleLabel.setVisible(t);
         creationLabel.setVisible(t);
         descTextArea.setVisible(t);
+        if(!todoShowing){
+            saveButton.setVisible(false);
+        }
+        else{
+            saveButton.setVisible(t);
+        }
         saveButton.setVisible(t);
         markAsDoneButton.setVisible(t);
         statusLabel.setVisible(false);
+
+    }
+
+    public void toggleLayout(boolean t){
+        descTextArea.setDisable(!t);
+        if(t){
+            markAsDoneButton.setText("Mark as done");
+            markAsDoneButton.setOnAction(e -> markAsDone(e));
+        }
+        else{
+            markAsDoneButton.setText("Mark as To do");
+            markAsDoneButton.setOnAction(e -> markAsTodo(e));
+        }
+
     }
 
     public void saveTasks(ActionEvent e) {
@@ -156,13 +176,38 @@ public class ControllerToDo  implements Initializable {
             toggleButton.setText("Show done");
             inputTask.setDisable(false);
             todoShowing = true;
+            toggleLayout(true);
         }
         else{
             taskList.getItems().addAll(tasks.get(1));
             toggleButton.setText("Show to do");
             inputTask.setDisable(true);
             todoShowing = false;
-
+            toggleLayout(false);
         }
+    }
+
+    /*Why Im saving the selectedTask in an aux variable instead of just using it to remove and add in lists:
+    * When you remove an item from tasklist, the changed() method triggers and the selectedtask var is reasigned to another task,
+    * Without the aux var It will remove and add different tasks that the actual selected*/
+    public void markAsDone(ActionEvent e){
+        Task aux = selectedTask;
+        taskList.getItems().remove(aux);
+        tasks.get(0).remove(aux);
+        tasks.get(1).add(aux);
+        toggleItems(false);
+
+        showStatus("Moved to done list!","#04a429");
+    }
+
+    public void markAsTodo(ActionEvent e){
+        Task aux = selectedTask;
+        taskList.getItems().remove(aux);
+        tasks.get(1).remove(aux);
+        tasks.get(0).add(aux);
+        toggleItems(false);
+
+        showStatus("Moved to do list!","#04a429");
+
     }
 }
