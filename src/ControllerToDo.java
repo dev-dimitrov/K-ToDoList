@@ -187,26 +187,24 @@ public class ControllerToDo  implements Initializable {
     public void switchTasksList(ActionEvent e){
         toggleItems(false); // Hide everything
 
-        String currentMode = toggleButton.getText(); // Get the text of the toggle button to now what list is showing
-
-        toggleButton.setText(currentMode.equals("Show done") ? "Show to do" : "Show done");
+        toggleButton.setText(todoShowing ? "Show done" : "Show to do");
         // Remove all the items for the ListView
         taskList.getItems().clear();
 
 
-        if(currentMode.equals("Show to do")){
-            taskList.getItems().addAll(tasks.get(0));
-            toggleButton.setText("Show done");
-            inputTask.setDisable(false);
-            todoShowing = true;
-            toggleLayout(true);
-        }
-        else{
+        if(todoShowing){
             taskList.getItems().addAll(tasks.get(1));
             toggleButton.setText("Show to do");
             inputTask.setDisable(true);
             todoShowing = false;
             toggleLayout(false);
+        }
+        else{
+            taskList.getItems().addAll(tasks.get(0));
+            toggleButton.setText("Show done");
+            inputTask.setDisable(false);
+            todoShowing = true;
+            toggleLayout(true);
         }
     }
 
