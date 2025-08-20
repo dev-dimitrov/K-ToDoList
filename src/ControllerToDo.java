@@ -131,6 +131,7 @@ public class ControllerToDo  implements Initializable {
     public void saveTasks(ActionEvent e) {
         // Updates the description of the selected task
         selectedTask.description = descTextArea.getText();
+        int status = -1;
         try(ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream("tasks.bin"))){
             // Make it ArrayList first bc it is complicated to save an ObservableList.
             List<Task> l = new ArrayList<>(taskList.getItems());
@@ -145,12 +146,16 @@ public class ControllerToDo  implements Initializable {
             }
 
             o.writeObject(tasks); // Writes the entire Arraylist w both
+            status = 0;
         }
         catch (IOException ex) {
             ex.printStackTrace();
             showStatus("Saving failed","#b80f04");
         }
-        showStatus("Changes  saved!","#04a429");
+        if(status != 0){
+            showStatus("Changes  saved!","#04a429");
+        }
+
     }
 
 
@@ -190,7 +195,6 @@ public class ControllerToDo  implements Initializable {
         toggleButton.setText(todoShowing ? "Show done" : "Show to do");
         // Remove all the items for the ListView
         taskList.getItems().clear();
-
 
         if(todoShowing){
             taskList.getItems().addAll(tasks.get(1));
