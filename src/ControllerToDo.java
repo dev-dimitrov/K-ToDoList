@@ -75,8 +75,15 @@ public class ControllerToDo  implements Initializable {
     // Catches the input form the TextField
     public void getInputTask(ActionEvent e){
         String input = inputTask.getText();
-        inputTask.clear();
-        addTask(input);
+        if(input.isBlank()){
+            showStatus("Please type a title", "#b80f04");
+        }
+        else{
+            statusLabel.setVisible(false);
+            inputTask.clear();
+            addTask(input);
+        }
+
     }
 
     // Adds a task to the list
