@@ -60,8 +60,9 @@ public class ControllerToDo  implements Initializable {
                 // manage here the selected task (This is not implying to check the checkbox)
                 System.out.println("Current selected: "+selected);
                 System.out.println("Previous selected: "+previous);
+
                 if(selected != null){
-                    selectedTask = selected;
+                    selectedTask = selected; // save the selected Task in a class var.
                     titleLabel.setText(selected.title);
                     descTextArea.setText(selected.description);
                     creationLabel.setText("Created on: "+selected.getCreationDate());
@@ -71,29 +72,35 @@ public class ControllerToDo  implements Initializable {
         });
     }
 
+    // Catches the input form the TextField
     public void getInputTask(ActionEvent e){
         String input = inputTask.getText();
         inputTask.clear();
         addTask(input);
     }
 
-
+    // Adds a task to the list
     public void addTask(String task){
         Task t = new Task(task,"No desc", LocalDateTime.now());
+
+        // Adding the task in
         if(todoShowing){
             tasks.get(0).add(t);
         }
         else{
             tasks.get(1).add(t);
         }
+        // Adding to the on-screen list
         taskList.getItems().add(t);
     }
 
+    // A quick way to show or hide all items that represent every task
     public void toggleItems(boolean t){
         titleLabel.setVisible(t);
         creationLabel.setVisible(t);
         descTextArea.setVisible(t);
-        if(!todoShowing){
+
+        if(!todoShowing){ // if the done list is showing, don't show the save button
             saveButton.setVisible(false);
         }
         else{
@@ -105,6 +112,8 @@ public class ControllerToDo  implements Initializable {
 
     }
 
+    // Changes the look and behavior of the markAsDoneButton depending if tis showing done or to do list
+    // true is for the done list and false is for the to do list
     public void toggleLayout(boolean t){
         descTextArea.setDisable(!t);
         if(t){
@@ -115,15 +124,18 @@ public class ControllerToDo  implements Initializable {
             markAsDoneButton.setText("Mark as To do");
             markAsDoneButton.setOnAction(e -> markAsTodo(e));
         }
-
     }
 
+    // Saves all the tasks from a specified group (to do or done)
+
     public void saveTasks(ActionEvent e) {
+        // Updates the description of the selected task
         selectedTask.description = descTextArea.getText();
         try(ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream("tasks.bin"))){
             // Make it ArrayList first bc it is complicated to save an ObservableList.
             List<Task> l = new ArrayList<>(taskList.getItems());
-            if(todoShowing){
+
+            if(todoShowing){ // If the list of to do is showing, saves
                 tasks.get(0).clear();
                 tasks.get(0).addAll(l);
             }
@@ -131,7 +143,8 @@ public class ControllerToDo  implements Initializable {
                 tasks.get(1).clear();
                 tasks.get(1).addAll(l);
             }
-            o.writeObject(tasks);
+
+            o.writeObject(tasks); // Writes the entire Arraylist w both
         }
         catch (IOException ex) {
             ex.printStackTrace();
@@ -140,11 +153,13 @@ public class ControllerToDo  implements Initializable {
         showStatus("Changes  saved!","#04a429");
     }
 
+
     public void loadTasks(String fileName){
         try(ObjectInputStream o = new ObjectInputStream(new FileInputStream("tasks.bin"))){
             ArrayList<ArrayList<Task>> l = (ArrayList<ArrayList<Task>>)o.readObject();
             tasks = l;
 
+            // Depending of what it is showing, add one or other list to the Listview
             if(todoShowing){
                 taskList.getItems().addAll(l.get(0));
             }
@@ -153,6 +168,7 @@ public class ControllerToDo  implements Initializable {
             }
         }
         catch(IOException | ClassNotFoundException ex){
+            // If the load is failed, prepare the List of lists
             tasks = new ArrayList<>();
             tasks.add(new ArrayList<>());
             tasks.add(new ArrayList<>());
@@ -160,6 +176,7 @@ public class ControllerToDo  implements Initializable {
         }
     }
 
+    // Shows a message with an hexColor
     public void showStatus(String msg, String hexColor){
         statusLabel.setVisible(false);
         statusLabel.setText(msg);
@@ -168,10 +185,15 @@ public class ControllerToDo  implements Initializable {
     }
 
     public void switchTasksList(ActionEvent e){
-        toggleItems(false);
-        String currentMode = toggleButton.getText();
+        toggleItems(false); // Hide everything
+
+        String currentMode = toggleButton.getText(); // Get the text of the toggle button to now what list is showing
+
         toggleButton.setText(currentMode.equals("Show done") ? "Show to do" : "Show done");
+        // Remove all the items for the ListView
         taskList.getItems().clear();
+
+
         if(currentMode.equals("Show to do")){
             taskList.getItems().addAll(tasks.get(0));
             toggleButton.setText("Show done");
@@ -201,6 +223,7 @@ public class ControllerToDo  implements Initializable {
         showStatus("Moved to done list!","#04a429");
     }
 
+    
     public void markAsTodo(ActionEvent e){
         Task aux = selectedTask;
         taskList.getItems().remove(aux);
