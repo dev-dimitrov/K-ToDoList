@@ -227,8 +227,12 @@ public class ControllerToDo  implements Initializable {
         taskList.getItems().remove(aux);
         tasks.get(0).remove(aux);
         tasks.get(1).add(aux);
-        //toggleItems(false);
 
+
+        if(taskList.getItems().isEmpty()){
+            toggleItems(false);
+            selectedTask = null;
+        }
         showStatus("Moved to done list!","#04a429");
     }
 
@@ -238,8 +242,10 @@ public class ControllerToDo  implements Initializable {
         taskList.getItems().remove(aux);
         tasks.get(1).remove(aux);
         tasks.get(0).add(aux);
-        //toggleItems(false);
-
+        if(taskList.getItems().isEmpty()){
+            toggleItems(false);
+            selectedTask = null;
+        }
         showStatus("Moved to do list!","#04a429");
 
     }
