@@ -99,6 +99,7 @@ public class ControllerToDo  implements Initializable {
         }
         // Adding to the on-screen list
         taskList.getItems().add(t);
+        taskList.getSelectionModel().select(t);
     }
 
     // A quick way to show or hide all items that represent every task
