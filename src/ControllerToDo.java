@@ -160,7 +160,7 @@ public class ControllerToDo  implements Initializable {
             ex.printStackTrace();
             showStatus("Saving failed","#b80f04");
         }
-        if(status != 0){
+        if(status == 0){
             showStatus("Changes  saved!","#04a429");
         }
 
