@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 
 import java.io.*;
 import java.net.URL;
@@ -42,6 +43,9 @@ public class ControllerToDo  implements Initializable {
     
     @FXML
     private Button toggleButton;
+
+    @FXML
+    private TextField taskNameInput;
 
     private ArrayList<ArrayList<Task>> tasks; // 0 index is for saving to do tasks and 1 done tasks
 
@@ -117,7 +121,8 @@ public class ControllerToDo  implements Initializable {
         saveButton.setVisible(t);
         markAsDoneButton.setVisible(t);
         statusLabel.setVisible(false);
-
+        // Always disable and hide the taskNameInput
+        toggleTaskNameInput(false);
     }
 
     // Changes the look and behavior of the markAsDoneButton depending if tis showing done or to do list
@@ -249,5 +254,22 @@ public class ControllerToDo  implements Initializable {
         }
         showStatus("Moved to do list!","#04a429");
 
+    }
+
+    public void showTaskNameInput(MouseEvent e) {
+        taskNameInput.setText(selectedTask.title);
+        toggleTaskNameInput(true);
+    }
+
+    public void hideTaskNameInput(ActionEvent e){
+        String newTitle = taskNameInput.getText();
+        selectedTask.title = newTitle;
+        System.out.println(newTitle);
+        toggleTaskNameInput(false);
+    }
+
+    public void toggleTaskNameInput(boolean a){
+        taskNameInput.setVisible(a);
+        taskNameInput.setDisable(!a);
     }
 }
