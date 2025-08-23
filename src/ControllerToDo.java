@@ -51,6 +51,9 @@ public class ControllerToDo  implements Initializable {
 
     private boolean todoShowing;
 
+    private static final String ERROR = "#b80f04";
+    private static final String SUCCESS = "#04a429";
+
     // @FXML
     // private List<String> sample = List.of("Wash the dishes", "Take out the trash", "Water the plants", "Vacuum the floor", "Walk the dog", "Clean the bathroom", "Fold the clothes", "Sweep the floor", "Feed the cat", "Organize the desk");
     @Override
@@ -80,7 +83,7 @@ public class ControllerToDo  implements Initializable {
     public void getInputTask(ActionEvent e){
         String input = inputTask.getText();
         if(input.isBlank()){
-            showStatus("Please type a title", "#b80f04");
+            showStatus("Please type a title", ERROR);
         }
         else{
             statusLabel.setVisible(false);
@@ -163,10 +166,10 @@ public class ControllerToDo  implements Initializable {
         }
         catch (IOException ex) {
             ex.printStackTrace();
-            showStatus("Saving failed","#b80f04");
+            showStatus("Saving failed", ERROR);
         }
         if(status == 0){
-            showStatus("Changes  saved!","#04a429");
+            showStatus("Changes  saved!",SUCCESS);
         }
 
     }
@@ -239,7 +242,7 @@ public class ControllerToDo  implements Initializable {
             toggleItems(false);
             selectedTask = null;
         }
-        showStatus("Moved to done list!","#04a429");
+        showStatus("Moved to done list!",SUCCESS);
     }
 
     
@@ -252,7 +255,7 @@ public class ControllerToDo  implements Initializable {
             toggleItems(false);
             selectedTask = null;
         }
-        showStatus("Moved to do list!","#04a429");
+        showStatus("Moved to do list!",SUCCESS);
 
     }
 
@@ -275,7 +278,7 @@ public class ControllerToDo  implements Initializable {
             saveTasks(e);
         }
         else{
-            showStatus("Please type a title", "#b80f04");
+            showStatus("Please type a title", ERROR);
         }
 
     }
