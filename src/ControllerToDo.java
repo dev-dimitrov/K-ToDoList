@@ -264,8 +264,14 @@ public class ControllerToDo  implements Initializable {
     public void hideTaskNameInput(ActionEvent e){
         String newTitle = taskNameInput.getText();
         selectedTask.title = newTitle;
-        System.out.println(newTitle);
+        // Saving the selectedTask bc it will change at the next line
+        Task aux = selectedTask;
+
+        // Forcing a change in the tasklist to correctly update the name of the task
+        taskList.getSelectionModel().selectFirst();
+        taskList.getSelectionModel().select(aux);
         toggleTaskNameInput(false);
+        saveTasks(e);
     }
 
     public void toggleTaskNameInput(boolean a){
