@@ -85,6 +85,9 @@ public class ControllerToDo  implements Initializable {
                     creationLabel.setText("Created on: "+selected.getCreationDate());
                     toggleItems(true);
                 }
+                else{
+                    toggleItems(false);
+                }
             }
         });
     }
@@ -247,11 +250,6 @@ public class ControllerToDo  implements Initializable {
         tasks.get(0).remove(aux);
         tasks.get(1).add(aux);
 
-
-        if(taskList.getItems().isEmpty()){
-            toggleItems(false);
-            selectedTask = null;
-        }
         showStatus("Moved to done list!",SUCCESS);
     }
 
@@ -261,10 +259,7 @@ public class ControllerToDo  implements Initializable {
         taskList.getItems().remove(aux);
         tasks.get(1).remove(aux);
         tasks.get(0).add(aux);
-        if(taskList.getItems().isEmpty()){
-            toggleItems(false);
-            selectedTask = null;
-        }
+
         showStatus("Moved to do list!",SUCCESS);
 
     }
