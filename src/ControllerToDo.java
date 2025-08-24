@@ -4,7 +4,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.SVGPath;
 
 import java.io.*;
 import java.net.URL;
@@ -47,20 +50,27 @@ public class ControllerToDo  implements Initializable {
     @FXML
     private TextField taskNameInput;
 
+    @FXML
+    private ImageView deleteIcon;
+
     private ArrayList<ArrayList<Task>> tasks; // 0 index is for saving to do tasks and 1 done tasks
 
     private boolean todoShowing;
 
     private static final String ERROR = "#b80f04";
+
     private static final String SUCCESS = "#04a429";
 
-    // @FXML
-    // private List<String> sample = List.of("Wash the dishes", "Take out the trash", "Water the plants", "Vacuum the floor", "Walk the dog", "Clean the bathroom", "Fold the clothes", "Sweep the floor", "Feed the cat", "Organize the desk");
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         todoShowing = true;
+        Image i = new Image(getClass().getResourceAsStream("resources/delete-icon.png"));
+        deleteIcon.setImage(i);
         toggleItems(false);
         loadTasks("tasks.bin");
+
+
+        deleteIcon.setImage(i);
         taskList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Task>() {
             @Override
             public void changed(ObservableValue<? extends Task> observableValue, Task previous, Task selected) {
@@ -114,7 +124,6 @@ public class ControllerToDo  implements Initializable {
         titleLabel.setVisible(t);
         creationLabel.setVisible(t);
         descTextArea.setVisible(t);
-
         if(!todoShowing){ // if the done list is showing, don't show the save button
             saveButton.setVisible(false);
         }
@@ -123,6 +132,7 @@ public class ControllerToDo  implements Initializable {
         }
         saveButton.setVisible(t);
         markAsDoneButton.setVisible(t);
+        deleteIcon.setVisible(t);
         statusLabel.setVisible(false);
         // Always disable and hide the taskNameInput
         toggleTaskNameInput(false);
@@ -286,5 +296,13 @@ public class ControllerToDo  implements Initializable {
     public void toggleTaskNameInput(boolean a){
         taskNameInput.setVisible(a);
         taskNameInput.setDisable(!a);
+    }
+
+    public void removeTask(MouseEvent e){
+        Task aux = selectedTask;
+
+        taskList.getItems().remove(aux);
+        tasks.get(todoShowing ? 0 : 1).remove(aux);
+        showStatus("Removed the tasks",SUCCESS);
     }
 }
