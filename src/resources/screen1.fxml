@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -37,5 +38,6 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </TextField>
+      <ImageView fx:id="deleteIcon" fitHeight="25.0" fitWidth="25.0" layoutX="554.0" layoutY="323.0" onMouseClicked="#removeTask" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
