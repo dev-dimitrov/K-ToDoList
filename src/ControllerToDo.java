@@ -276,8 +276,8 @@ public class ControllerToDo  implements Initializable {
             // Saving the selectedTask bc it will change at the next line
             Task aux = selectedTask;
 
-            // Forcing a change in the tasklist to correctly update the name of the task
-            taskList.getSelectionModel().selectFirst();
+            // Forcing the clearing selection in the tasklist to correctly update the name of the task
+            taskList.getSelectionModel().clearSelection();
             taskList.getSelectionModel().select(aux);
             toggleTaskNameInput(false);
             saveTasks(e);
