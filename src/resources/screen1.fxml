@@ -11,11 +11,15 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerToDo">
    <children>
+      <Label fx:id="versionLabel" alignment="CENTER_RIGHT" layoutX="412.0" layoutY="363.0" onMouseClicked="#openLink" prefHeight="18.0" prefWidth="166.0" text="github.com/su-Kaizen   |   v1.0">
+         <font>
+            <Font size="10.0" />
+         </font></Label>
       <ListView fx:id="taskList" editable="true" focusTraversable="false" layoutX="24.0" layoutY="48.0" prefHeight="262.0" prefWidth="200.0" />
       <TextField fx:id="inputTask" layoutX="24.0" layoutY="322.0" onAction="#getInputTask" prefHeight="26.0" prefWidth="200.0" promptText="Write here your task" />
-      <Label layoutX="24.0" layoutY="16.0" prefHeight="32.0" prefWidth="142.0" text="K-ToDoList">
+      <Label layoutX="24.0" layoutY="16.0" prefHeight="32.0" prefWidth="166.0" text="K-ToDoList">
          <font>
-            <Font size="22.0" />
+            <Font name="Audiowide Regular" size="22.0" />
          </font>
       </Label>
       <Label fx:id="titleLabel" layoutX="233.0" layoutY="48.0" onMouseClicked="#showTaskNameInput" prefHeight="47.0" prefWidth="358.0" text="SelectedTask">
@@ -24,7 +28,7 @@
          </font>
       </Label>
       <Label fx:id="creationLabel" layoutX="233.0" layoutY="86.0" prefHeight="18.0" prefWidth="213.0" text="Created on: " />
-      <TextArea fx:id="descTextArea" layoutX="233.0" layoutY="104.0" prefHeight="200.0" prefWidth="346.0" promptText="Write here the description of the task" wrapText="true" />
+      <TextArea fx:id="descTextArea" layoutX="233.0" layoutY="104.0" prefHeight="206.0" prefWidth="346.0" promptText="Write here the description of the task" wrapText="true" />
       <Button fx:id="saveButton" layoutX="233.0" layoutY="322.0" mnemonicParsing="false" onAction="#saveTasks" prefHeight="26.0" prefWidth="101.0" text="Save changes" />
       <Button fx:id="markAsDoneButton" layoutX="342.0" layoutY="322.0" mnemonicParsing="false" onAction="#markAsDone" prefHeight="26.0" prefWidth="102.0" text="Mark as done" />
       <Label fx:id="statusLabel" contentDisplay="CENTER" layoutX="124.0" layoutY="363.0" prefHeight="18.0" prefWidth="142.0" text="statusLabel">
