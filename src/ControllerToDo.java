@@ -300,4 +300,18 @@ public class ControllerToDo  implements Initializable {
         tasks.get(todoShowing ? 0 : 1).remove(aux);
         showStatus("Removed the tasks",SUCCESS);
     }
+
+    public void openLink(MouseEvent e){
+        try {
+            if (System.getProperty("os.name").contains("Windows")) {
+                new ProcessBuilder("cmd","/c","start https://github.com/su-Kaizen").inheritIO().start().waitFor();
+            }
+            else{
+                new ProcessBuilder("xdg-open","https://github.com/su-Kaizen").start();
+            }
+
+        } catch (IOException | InterruptedException ex) {
+            System.out.println(ex);
+        }
+    }
 }
