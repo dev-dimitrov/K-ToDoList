@@ -7,7 +7,6 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.shape.SVGPath;
 
 import java.io.*;
 import java.net.URL;
@@ -85,10 +84,13 @@ public class ControllerToDo  implements Initializable {
                     creationLabel.setText("Created on: "+selected.getCreationDate());
                     toggleItems(true);
                 }
-                else{
+                else if(!taskList.getItems().isEmpty()){
                     toggleItems(false);
                 }
+
+                checkForEmptyList();
             }
+
         });
     }
 
@@ -200,6 +202,8 @@ public class ControllerToDo  implements Initializable {
             else{
                 taskList.getItems().addAll(l.get(1));
             }
+
+            checkForEmptyList();
         }
         catch(IOException | ClassNotFoundException ex){
             // If the load is failed, prepare the List of lists
@@ -207,6 +211,7 @@ public class ControllerToDo  implements Initializable {
             tasks.add(new ArrayList<>());
             tasks.add(new ArrayList<>());
             ex.printStackTrace();
+            checkForEmptyList();
         }
     }
 
@@ -239,6 +244,7 @@ public class ControllerToDo  implements Initializable {
             todoShowing = true;
             toggleLayout(true);
         }
+        checkForEmptyList();
     }
 
     /*Why Im saving the selectedTask in an aux variable instead of just using it to remove and add in lists:
@@ -261,7 +267,6 @@ public class ControllerToDo  implements Initializable {
         tasks.get(0).add(aux);
 
         showStatus("Moved to do list!",SUCCESS);
-
     }
 
     public void showTaskNameInput(MouseEvent e) {
@@ -312,6 +317,14 @@ public class ControllerToDo  implements Initializable {
 
         } catch (IOException | InterruptedException ex) {
             System.out.println(ex);
+        }
+    }
+
+    public void checkForEmptyList(){
+        if(taskList.getItems().isEmpty()){
+            toggleItems(false);
+            titleLabel.setText(todoShowing ? "Nothing to do!!" : "Nothing done!!");
+            titleLabel.setVisible(true);
         }
     }
 }
