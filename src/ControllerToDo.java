@@ -60,13 +60,15 @@ public class ControllerToDo  implements Initializable {
 
     private static final String SUCCESS = "#04a429";
 
+    private String taskFile;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         todoShowing = true;
         Image i = new Image(getClass().getResourceAsStream("resources/delete-icon.png"));
         deleteIcon.setImage(i);
         toggleItems(false);
-        loadTasks("tasks.bin");
+        loadConfig();
 
 
         deleteIcon.setImage(i);
@@ -163,7 +165,7 @@ public class ControllerToDo  implements Initializable {
         // Updates the description of the selected task
         selectedTask.description = descTextArea.getText();
         int status = -1;
-        try(ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream("tasks.bin"))){
+        try(ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream(taskFile))){
             // Make it ArrayList first bc it is complicated to save an ObservableList.
             List<Task> l = new ArrayList<>(taskList.getItems());
 
@@ -190,8 +192,8 @@ public class ControllerToDo  implements Initializable {
     }
 
 
-    public void loadTasks(String fileName){
-        try(ObjectInputStream o = new ObjectInputStream(new FileInputStream("tasks.bin"))){
+    public void loadTasks(){
+        try(ObjectInputStream o = new ObjectInputStream(new FileInputStream(taskFile))){
             ArrayList<ArrayList<Task>> l = (ArrayList<ArrayList<Task>>)o.readObject();
             tasks = l;
 
@@ -213,6 +215,18 @@ public class ControllerToDo  implements Initializable {
             ex.printStackTrace();
             checkForEmptyList();
         }
+    }
+
+    public void loadConfig(){
+        try(BufferedReader b = new BufferedReader(new FileReader("config.txt"))){
+            b.readLine();
+            taskFile = b.readLine();
+        }
+        catch(IOException ex){
+            ex.printStackTrace();
+        }
+
+        loadTasks();
     }
 
     // Shows a message with an hexColor
