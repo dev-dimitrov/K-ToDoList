@@ -317,7 +317,7 @@ public class ControllerToDo  implements Initializable {
 
         taskList.getItems().remove(aux);
         tasks.get(todoShowing ? 0 : 1).remove(aux);
-        showStatus("Removed the tasks",SUCCESS);
+        showStatus("Removed the task",SUCCESS);
     }
 
     public void openLink(MouseEvent e){
