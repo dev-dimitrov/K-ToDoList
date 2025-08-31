@@ -1,2 +1,0 @@
-\\\\ The next line specifies the file that will save your tasks. For ex: tasks.bin, college.bin... \\\\
-tasks.bin
