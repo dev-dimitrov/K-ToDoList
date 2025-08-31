@@ -204,7 +204,7 @@ public class ControllerToDo  implements Initializable {
             else{
                 taskList.getItems().addAll(l.get(1));
             }
-
+            showStatus("Loaded from "+taskFile,SUCCESS);
             checkForEmptyList();
         }
         catch(IOException | ClassNotFoundException ex){
@@ -214,6 +214,7 @@ public class ControllerToDo  implements Initializable {
             tasks.add(new ArrayList<>());
             ex.printStackTrace();
             checkForEmptyList();
+            showStatus("Couldn't load from "+taskFile+", saving now.",ERROR);
         }
     }
 
