@@ -124,6 +124,7 @@ public class ControllerToDo  implements Initializable {
         // Adding to the on-screen list
         taskList.getItems().add(t);
         taskList.getSelectionModel().select(t);
+        saveTasks(null);
     }
 
     // A quick way to show or hide all items that represent every task
@@ -163,17 +164,19 @@ public class ControllerToDo  implements Initializable {
 
     public void saveTasks(ActionEvent e) {
         // Updates the description of the selected task
-        selectedTask.description = descTextArea.getText();
+        if(e != null){
+            selectedTask.description = descTextArea.getText();
+        }
         int status = -1;
         try(ObjectOutputStream o = new ObjectOutputStream(new FileOutputStream(taskFile))){
             // Make it ArrayList first bc it is complicated to save an ObservableList.
             List<Task> l = new ArrayList<>(taskList.getItems());
 
-            if(todoShowing){ // If the list of to do is showing, saves
+            if(todoShowing){ // If the list of to do is showing, saves only that
                 tasks.get(0).clear();
                 tasks.get(0).addAll(l);
             }
-            else{
+            else{ // and viceversa
                 tasks.get(1).clear();
                 tasks.get(1).addAll(l);
             }
@@ -185,7 +188,7 @@ public class ControllerToDo  implements Initializable {
             ex.printStackTrace();
             showStatus("Saving failed", ERROR);
         }
-        if(status == 0){
+        if(status == 0 && e != null){
             showStatus("Changes  saved!",SUCCESS);
         }
 
@@ -272,15 +275,15 @@ public class ControllerToDo  implements Initializable {
         tasks.get(1).add(aux);
 
         showStatus("Moved to done list!",SUCCESS);
+        saveTasks(null);
     }
-
     
     public void markAsTodo(ActionEvent e){
         Task aux = selectedTask;
         taskList.getItems().remove(aux);
         tasks.get(1).remove(aux);
         tasks.get(0).add(aux);
-
+        saveTasks(null);
         showStatus("Moved to do list!",SUCCESS);
     }
 
@@ -318,6 +321,7 @@ public class ControllerToDo  implements Initializable {
 
         taskList.getItems().remove(aux);
         tasks.get(todoShowing ? 0 : 1).remove(aux);
+        saveTasks(null);
         showStatus("Removed the task",SUCCESS);
     }
 
