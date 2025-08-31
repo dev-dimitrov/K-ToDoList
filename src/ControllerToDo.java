@@ -76,8 +76,8 @@ public class ControllerToDo  implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Task> observableValue, Task previous, Task selected) {
                 // manage here the selected task (This is not implying to check the checkbox)
-                System.out.println("Current selected: "+selected);
-                System.out.println("Previous selected: "+previous);
+//                System.out.println("Current selected: "+selected);
+//                System.out.println("Previous selected: "+previous);
 
                 if(selected != null){
                     selectedTask = selected; // save the selected Task in a class var.
