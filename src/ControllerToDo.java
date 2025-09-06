@@ -10,7 +10,9 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.*;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -83,7 +85,7 @@ public class ControllerToDo  implements Initializable {
                     selectedTask = selected; // save the selected Task in a class var.
                     titleLabel.setText(selected.title);
                     descTextArea.setText(selected.description);
-                    creationLabel.setText("Created on: "+selected.getCreationDate());
+                    creationLabel.setText("Created on: "+selected.getCreationDate()+" "+daysDiff());
                     toggleItems(true);
                 }
                 else if(!taskList.getItems().isEmpty()){
@@ -345,5 +347,19 @@ public class ControllerToDo  implements Initializable {
             titleLabel.setText(todoShowing ? "Nothing to do!!" : "Nothing done!!");
             titleLabel.setVisible(true);
         }
+    }
+
+    public String daysDiff(){
+        LocalDateTime a = selectedTask.creation;
+        int df = (int) a.until(LocalDateTime.now(), ChronoUnit.DAYS);
+        String result = "";
+
+        switch(df){
+            case 0 -> result = "(Today)";
+            case 1 -> result = "(1 day ago)";
+            default -> result =  "("+df+" days ago)";
+        }
+
+        return result;
     }
 }
