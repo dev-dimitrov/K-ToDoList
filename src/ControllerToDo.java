@@ -91,8 +91,9 @@ public class ControllerToDo  implements Initializable {
                 else if(!taskList.getItems().isEmpty()){
                     toggleItems(false);
                 }
+                System.out.println("TODO LIST:"+tasks.get(0).size());
+                System.out.println("DONE LIST:"+tasks.get(1).size());
 
-                checkForEmptyList();
             }
 
         });
@@ -275,9 +276,9 @@ public class ControllerToDo  implements Initializable {
         taskList.getItems().remove(aux);
         tasks.get(0).remove(aux);
         tasks.get(1).add(aux);
-
         showStatus("Moved to done list!",SUCCESS);
         saveTasks(null);
+        checkForEmptyList();
     }
     
     public void markAsTodo(ActionEvent e){
@@ -287,6 +288,7 @@ public class ControllerToDo  implements Initializable {
         tasks.get(0).add(aux);
         saveTasks(null);
         showStatus("Moved to do list!",SUCCESS);
+        checkForEmptyList();
     }
 
     public void showTaskNameInput(MouseEvent e) {
@@ -325,6 +327,7 @@ public class ControllerToDo  implements Initializable {
         tasks.get(todoShowing ? 0 : 1).remove(aux);
         saveTasks(null);
         showStatus("Removed the task",SUCCESS);
+        checkForEmptyList();
     }
 
     public void openLink(MouseEvent e){
@@ -342,9 +345,9 @@ public class ControllerToDo  implements Initializable {
     }
 
     public void checkForEmptyList(){
-        if(taskList.getItems().isEmpty()){
+        if((todoShowing && tasks.get(0).isEmpty()) || (!todoShowing && tasks.get(1).isEmpty())){
             toggleItems(false);
-            titleLabel.setText(todoShowing ? "Nothing to do!!" : "Nothing done!!");
+            titleLabel.setText("Nothing here...");
             titleLabel.setVisible(true);
         }
     }
