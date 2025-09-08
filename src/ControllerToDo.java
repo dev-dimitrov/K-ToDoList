@@ -83,7 +83,7 @@ public class ControllerToDo  implements Initializable {
 
                 if(selected != null){
                     selectedTask = selected; // save the selected Task in a class var.
-                    titleLabel.setText(selected.title);
+                    setTaskTitle(selected.title);
                     descTextArea.setText(selected.description);
                     creationLabel.setText("Created on: "+selected.getCreationDate()+" "+daysDiff());
                     toggleItems(true);
@@ -91,9 +91,6 @@ public class ControllerToDo  implements Initializable {
                 else if(!taskList.getItems().isEmpty()){
                     toggleItems(false);
                 }
-                System.out.println("TODO LIST:"+tasks.get(0).size());
-                System.out.println("DONE LIST:"+tasks.get(1).size());
-
             }
 
         });
@@ -194,7 +191,6 @@ public class ControllerToDo  implements Initializable {
         if(status == 0 && e != null){
             showStatus("Changes  saved!",SUCCESS);
         }
-
     }
 
 
@@ -364,5 +360,11 @@ public class ControllerToDo  implements Initializable {
         }
 
         return result;
+    }
+
+    public void setTaskTitle(String t){
+        int l = t.length();
+        titleLabel.setStyle(l > 25 ? "-fx-font-size: 16px;" : "-fx-font-size: 26px;");
+        titleLabel.setText(t);
     }
 }
