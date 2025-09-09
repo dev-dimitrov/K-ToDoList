@@ -7,6 +7,8 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 import java.io.*;
 import java.net.URL;
@@ -83,7 +85,7 @@ public class ControllerToDo  implements Initializable {
 
                 if(selected != null){
                     selectedTask = selected; // save the selected Task in a class var.
-                    titleLabel.setText(selected.title);
+                    setTaskTitle(selected.title);
                     descTextArea.setText(selected.description);
                     creationLabel.setText("Created on: "+selected.getCreationDate()+" "+daysDiff());
                     toggleItems(true);
@@ -91,9 +93,6 @@ public class ControllerToDo  implements Initializable {
                 else if(!taskList.getItems().isEmpty()){
                     toggleItems(false);
                 }
-                System.out.println("TODO LIST:"+tasks.get(0).size());
-                System.out.println("DONE LIST:"+tasks.get(1).size());
-
             }
 
         });
@@ -194,7 +193,6 @@ public class ControllerToDo  implements Initializable {
         if(status == 0 && e != null){
             showStatus("Changes  saved!",SUCCESS);
         }
-
     }
 
 
@@ -354,15 +352,22 @@ public class ControllerToDo  implements Initializable {
 
     public String daysDiff(){
         LocalDateTime a = selectedTask.creation;
+
         int df = (int) a.until(LocalDateTime.now(), ChronoUnit.DAYS);
         String result = "";
-
+        System.out.println("DF: "+df);
         switch(df){
             case 0 -> result = "(Today)";
-            case 1 -> result = "(1 day ago)";
+            case 1 -> result = "(Yesterday)";
             default -> result =  "("+df+" days ago)";
         }
 
         return result;
+    }
+
+    public void setTaskTitle(String t){
+        int l = t.length();
+        titleLabel.setFont(Font.font("System", FontWeight.BOLD,l >= 24 ? 16 : 26));
+        titleLabel.setText(t);
     }
 }
