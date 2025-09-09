@@ -7,6 +7,8 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 import java.io.*;
 import java.net.URL;
@@ -350,12 +352,13 @@ public class ControllerToDo  implements Initializable {
 
     public String daysDiff(){
         LocalDateTime a = selectedTask.creation;
+
         int df = (int) a.until(LocalDateTime.now(), ChronoUnit.DAYS);
         String result = "";
-
+        System.out.println("DF: "+df);
         switch(df){
             case 0 -> result = "(Today)";
-            case 1 -> result = "(1 day ago)";
+            case 1 -> result = "(Yesterday)";
             default -> result =  "("+df+" days ago)";
         }
 
@@ -364,7 +367,7 @@ public class ControllerToDo  implements Initializable {
 
     public void setTaskTitle(String t){
         int l = t.length();
-        titleLabel.setStyle(l > 25 ? "-fx-font-size: 16px;" : "-fx-font-size: 26px;");
+        titleLabel.setFont(Font.font("System", FontWeight.BOLD,l >= 24 ? 16 : 26));
         titleLabel.setText(t);
     }
 }
