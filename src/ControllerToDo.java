@@ -352,7 +352,8 @@ public class ControllerToDo  implements Initializable {
 
     public String daysDiff(){
         LocalDateTime a = selectedTask.creation;
-
+        a = a.minusHours(a.getHour());
+        a = a.minusMinutes(a.getMinute());
         int df = (int) a.until(LocalDateTime.now(), ChronoUnit.DAYS);
         String result = "";
         System.out.println("DF: "+df);
