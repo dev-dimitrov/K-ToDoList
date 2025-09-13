@@ -7,4 +7,5 @@ You can:
   - Rename them.
   - Change its description.
   - Mark them as done or as to do.
+  - Remove tasks from both lists. (To do an done)
 <img width="749" height="499" alt="image" src="https://github.com/user-attachments/assets/8e6e137a-a463-40e2-ba07-43a32047e588" />
