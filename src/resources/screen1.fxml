@@ -43,5 +43,9 @@
          </font>
       </TextField>
       <ImageView fx:id="deleteIcon" fitHeight="25.0" fitWidth="25.0" layoutX="554.0" layoutY="323.0" onMouseClicked="#removeTask" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="statLabel" alignment="CENTER_RIGHT" layoutX="413.0" layoutY="23.0" prefHeight="18.0" prefWidth="166.0" text="Tasks completed today:">
+         <font>
+            <Font name="System Italic" size="12.0" />
+         </font></Label>
    </children>
 </AnchorPane>
