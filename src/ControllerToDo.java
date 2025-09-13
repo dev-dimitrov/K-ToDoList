@@ -14,6 +14,7 @@ import java.io.*;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +47,7 @@ public class ControllerToDo  implements Initializable {
 
     @FXML
     private Label statusLabel;
-    
+
     @FXML
     private Button toggleButton;
 
@@ -56,6 +57,9 @@ public class ControllerToDo  implements Initializable {
     @FXML
     private ImageView deleteIcon;
 
+    @FXML
+    private Label statLabel;
+
     private ArrayList<ArrayList<Task>> tasks; // 0 index is for saving to do tasks and 1 done tasks
 
     private boolean todoShowing;
@@ -64,7 +68,11 @@ public class ControllerToDo  implements Initializable {
 
     private static final String SUCCESS = "#04a429";
 
+    private String[] stats = new String[2];
+
     private String taskFile;
+
+    private DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -184,6 +192,8 @@ public class ControllerToDo  implements Initializable {
             }
 
             o.writeObject(tasks); // Writes the entire Arraylist w both
+
+            o.writeObject(stats);
             status = 0;
         }
         catch (IOException ex) {
@@ -210,16 +220,22 @@ public class ControllerToDo  implements Initializable {
             }
             showStatus("Loaded from "+taskFile,SUCCESS);
             checkForEmptyList();
+
+            stats = (String[]) o.readObject();
+
         }
         catch(IOException | ClassNotFoundException ex){
             // If the load is failed, prepare the List of lists
             tasks = new ArrayList<>();
             tasks.add(new ArrayList<>());
             tasks.add(new ArrayList<>());
-            ex.printStackTrace();
             checkForEmptyList();
             showStatus("Couldn't load from "+taskFile+", saving now.",ERROR);
         }
+        finally {
+            manageStats(0); //Managing stats anyways
+        }
+
     }
 
     public void loadConfig(){
@@ -268,17 +284,18 @@ public class ControllerToDo  implements Initializable {
 
     /*Why Im saving the selectedTask in an aux variable instead of just using it to remove and add in lists:
     * When you remove an item from tasklist, the changed() method triggers and the selectedtask var is reasigned to another task,
-    * Without the aux var It will remove and add different tasks that the actual selected*/
+    * Without the aux var It will remove and add different tasks than the actual selected*/
     public void markAsDone(ActionEvent e){
         Task aux = selectedTask;
         taskList.getItems().remove(aux);
         tasks.get(0).remove(aux);
         tasks.get(1).add(aux);
+        manageStats(1);
         showStatus("Moved to done list!",SUCCESS);
         saveTasks(null);
         checkForEmptyList();
     }
-    
+
     public void markAsTodo(ActionEvent e){
         Task aux = selectedTask;
         taskList.getItems().remove(aux);
@@ -356,7 +373,7 @@ public class ControllerToDo  implements Initializable {
         a = a.minusMinutes(a.getMinute());
         int df = (int) a.until(LocalDateTime.now(), ChronoUnit.DAYS);
         String result = "";
-        System.out.println("DF: "+df);
+
         switch(df){
             case 0 -> result = "(Today)";
             case 1 -> result = "(Yesterday)";
@@ -370,5 +387,25 @@ public class ControllerToDo  implements Initializable {
         int l = t.length();
         titleLabel.setFont(Font.font("System", FontWeight.BOLD,l >= 24 ? 16 : 26));
         titleLabel.setText(t);
+    }
+
+
+    public void manageStats(int quantity){
+        LocalDate now = LocalDate.now();
+        if(stats[0] == null){ // If there is not date at the array put the today and add a quantity(0)
+            stats[0] = now.format(f);
+            stats[1] = quantity+"";
+        }
+        else{
+            if(now.format(f).equals(stats[0])){ // If the date at the array is the same as today
+                int n = Integer.parseInt(stats[1])+quantity; // adds 1
+                stats[1] = n+""; // saves it
+            }
+            else{
+                stats[0] = now.format(f); // If not, put the today's date
+                stats[1] = quantity+""; // and the quantity
+            }
+        }
+        statLabel.setText("Tasks completed today: "+stats[1]); // Draw the stat
     }
 }
