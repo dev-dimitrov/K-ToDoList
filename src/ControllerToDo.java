@@ -109,8 +109,20 @@ public class ControllerToDo  implements Initializable {
     // Catches the input form the TextField
     public void getInputTask(ActionEvent e){
         String input = inputTask.getText();
+
         if(input.isBlank()){
             showStatus("Please type a title", ERROR);
+        }
+        else if(input.substring(0,1).equals("@") && input.length() >1){
+            String tasks[] = input.substring(1).split("@"); // Removing the first at
+            for(String t: tasks){
+                if(!t.isBlank()){ // Only add tasks with not empty title
+                    addTask(t);
+                }
+
+            }
+            showStatus("Added "+tasks.length+" at once",SUCCESS);
+            inputTask.clear();
         }
         else{
             statusLabel.setVisible(false);
