@@ -77,7 +77,7 @@ public class ControllerToDo  implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         todoShowing = true;
-        Image i = new Image(getClass().getResourceAsStream("resources/delete-icon.png"));
+        Image i = new Image(getClass().getResourceAsStream("resources/delete-icon2.png"));
         deleteIcon.setImage(i);
         toggleItems(false);
         loadConfig();
@@ -183,7 +183,6 @@ public class ControllerToDo  implements Initializable {
     }
 
     // Saves all the tasks from a specified group (to do or done)
-
     public void saveTasks(ActionEvent e) {
         // Updates the description of the selected task
         if(e != null){
