@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 public class LauncherToDo extends Application {
+    
     public void start(Stage primaryStage) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("resources/screen1.fxml"));
@@ -15,6 +16,7 @@ public class LauncherToDo extends Application {
             primaryStage.show();
             primaryStage.setResizable(false);
             System.out.println("Running, running!!");
+
         } catch(Exception e) {
             e.printStackTrace();
         }
