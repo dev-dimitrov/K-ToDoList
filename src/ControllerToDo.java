@@ -9,7 +9,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-
+import javafx.stage.Stage;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.fxml.FXMLLoader;
 import java.io.*;
 import java.net.URL;
 import java.time.LocalDate;
@@ -58,6 +62,9 @@ public class ControllerToDo  implements Initializable {
     private ImageView deleteIcon;
 
     @FXML
+    private ImageView infoIcon;
+
+    @FXML
     private Label statLabel;
 
     private ArrayList<ArrayList<Task>> tasks; // 0 index is for saving to do tasks and 1 done tasks
@@ -74,16 +81,24 @@ public class ControllerToDo  implements Initializable {
 
     private DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
+    private Stage stage;
+
+    private Scene scene;
+
+    private Parent root;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         todoShowing = true;
-        Image i = new Image(getClass().getResourceAsStream("resources/delete-icon2.png"));
+        Image i = new Image(getClass().getResourceAsStream("resources/delete-icon.png"));
+        Image i2 = new Image(getClass().getResourceAsStream("resources/info-icon.png"));
         deleteIcon.setImage(i);
+        infoIcon.setImage(i2);
         toggleItems(false);
         loadConfig();
 
 
-        deleteIcon.setImage(i);
+
         taskList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Task>() {
             @Override
             public void changed(ObservableValue<? extends Task> observableValue, Task previous, Task selected) {
@@ -418,5 +433,30 @@ public class ControllerToDo  implements Initializable {
             }
         }
         statLabel.setText("Tasks completed today: "+stats[1]); // Draw the stat
+    }
+
+    public void openInfo(MouseEvent e) throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("resources/info.fxml"));
+        root = loader.load();
+        stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("resources/style.css").toExternalForm());
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    /*Used in both controllers*/
+    public static void linkOpener(String link) {
+        try {
+            if (System.getProperty("os.name").contains("Windows")) {
+                new ProcessBuilder("cmd","/c","start "+link).inheritIO().start().waitFor();
+            }
+            else{
+                new ProcessBuilder("xdg-open",link).start();
+            }
+
+        } catch (IOException | InterruptedException ex) {
+            System.out.println(ex);
+        }
     }
 }

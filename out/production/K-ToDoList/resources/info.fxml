@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerInfo">
+   <children>
+      <ImageView fx:id="imageLogo" fitHeight="225.0" fitWidth="225.0" layoutX="188.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="back2App" layoutX="269.0" layoutY="360.0" mnemonicParsing="false" onAction="#openApp" text="Go to app" />
+      <Label fx:id="textLabel" layoutX="188.0" layoutY="239.0" prefHeight="78.0" prefWidth="225.0" text="Thank you for using K-ToDoList!                You can add multiple tasks at once doing '@task1@task2@task3'" textAlignment="CENTER" wrapText="true" />
+      <VBox alignment="CENTER" layoutX="202.0" layoutY="304.0" prefHeight="55.0" prefWidth="202.0">
+         <children>
+            <Hyperlink onAction="#openLink" text="Info icon by Icons8" />
+            <Hyperlink onAction="#openLink" text="Delete icon by Icons8" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
