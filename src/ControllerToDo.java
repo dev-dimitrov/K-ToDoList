@@ -372,17 +372,7 @@ public class ControllerToDo  implements Initializable {
     }
 
     public void openLink(MouseEvent e){
-        try {
-            if (System.getProperty("os.name").contains("Windows")) {
-                new ProcessBuilder("cmd","/c","start https://github.com/dev-dimitrov").inheritIO().start().waitFor();
-            }
-            else{
-                new ProcessBuilder("xdg-open","https://github.com/dev-dimitrov").start();
-            }
-
-        } catch (IOException | InterruptedException ex) {
-            System.out.println(ex);
-        }
+        linkOpener("https://github.com/dev-dimitrov");
     }
 
     public void checkForEmptyList(){
