@@ -5,7 +5,6 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -31,7 +30,7 @@
       <Label fx:id="creationLabel" layoutX="233.0" layoutY="86.0" prefHeight="18.0" prefWidth="346.0" text="Created on: " />
       <TextArea fx:id="descTextArea" layoutX="233.0" layoutY="104.0" prefHeight="206.0" prefWidth="346.0" promptText="Write here the description of the task" wrapText="true" />
       <Button fx:id="saveButton" layoutX="342.0" layoutY="322.0" mnemonicParsing="false" onAction="#saveTasks" prefHeight="26.0" prefWidth="101.0" text="Save changes" />
-      <Button fx:id="markAsDoneButton" layoutX="233.0" layoutY="322.0" mnemonicParsing="false" onAction="#markAsDone" prefHeight="26.0" prefWidth="102.0" text="Mark as done"/>
+      <Button fx:id="markAsDoneButton" layoutX="233.0" layoutY="322.0" mnemonicParsing="false" onAction="#markAsDone" prefHeight="26.0" prefWidth="102.0" text="Mark as done" />
       <Label fx:id="statusLabel" contentDisplay="CENTER" layoutX="114.0" layoutY="363.0" prefHeight="18.0" prefWidth="318.0" text="statusLabel">
          <font>
             <Font name="System Bold" size="12.0" />
@@ -48,5 +47,6 @@
          <font>
             <Font name="System Italic" size="12.0" />
          </font></Label>
+      <ImageView fx:id="infoIcon" fitHeight="25.0" fitWidth="25.0" layoutX="169.0" layoutY="20.0" onMouseClicked="#openInfo" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
