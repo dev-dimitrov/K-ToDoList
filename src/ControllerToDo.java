@@ -122,6 +122,7 @@ public class ControllerToDo  implements Initializable {
     }
 
     // Catches the input form the TextField
+
     public void getInputTask(ActionEvent e){
         String input = inputTask.getText();
 
@@ -131,6 +132,7 @@ public class ControllerToDo  implements Initializable {
         else if(input.substring(0,1).equals("@") && input.length() >1){
             String tasks[] = input.substring(1).split("@"); // Removing the first at
             for(String t: tasks){
+                //TODO Make a better control for task titles
                 if(!t.isBlank()){ // Only add tasks with not empty title
                     addTask(t);
                 }
@@ -165,6 +167,7 @@ public class ControllerToDo  implements Initializable {
     }
 
     // A quick way to show or hide all items that represent every task
+    //TODO Hide saveChanges button when it's the done list showing
     public void toggleItems(boolean t){
         titleLabel.setVisible(t);
         creationLabel.setVisible(t);
@@ -333,8 +336,13 @@ public class ControllerToDo  implements Initializable {
     }
 
     public void showTaskNameInput(MouseEvent e) {
-        taskNameInput.setText(selectedTask.title);
-        toggleTaskNameInput(true);
+        if(todoShowing){
+            taskNameInput.setText(selectedTask.title);
+            toggleTaskNameInput(true);
+        }
+        else{
+            showStatus("You can't rename a done task...",ERROR);
+        }
     }
 
     public void hideTaskNameInput(ActionEvent e) {
