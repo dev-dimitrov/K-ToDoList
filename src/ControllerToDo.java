@@ -122,7 +122,6 @@ public class ControllerToDo  implements Initializable {
     }
 
     // Catches the input form the TextField
-
     public void getInputTask(ActionEvent e){
         String input = inputTask.getText();
 
@@ -132,9 +131,8 @@ public class ControllerToDo  implements Initializable {
         else if(input.substring(0,1).equals("@") && input.length() >1){
             String tasks[] = input.substring(1).split("@"); // Removing the first at
             for(String t: tasks){
-                //TODO Make a better control for task titles
                 if(!t.isBlank()){ // Only add tasks with not empty title
-                    addTask(t);
+                    addTask(t.strip());
                 }
 
             }
@@ -144,7 +142,7 @@ public class ControllerToDo  implements Initializable {
         else{
             statusLabel.setVisible(false);
             inputTask.clear();
-            addTask(input);
+            addTask(input.strip());
         }
 
     }
@@ -346,7 +344,7 @@ public class ControllerToDo  implements Initializable {
     }
 
     public void hideTaskNameInput(ActionEvent e) {
-        String newTitle = taskNameInput.getText();
+        String newTitle = taskNameInput.getText().strip();
         if (!newTitle.isBlank()) {
             selectedTask.title = newTitle;
             // Saving the selectedTask bc it will change at the next line
