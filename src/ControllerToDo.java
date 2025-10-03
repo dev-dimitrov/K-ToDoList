@@ -144,7 +144,7 @@ public class ControllerToDo  implements Initializable {
             inputTask.clear();
             addTask(input.strip());
         }
-
+        manageStats(-1);
     }
 
     // Adds a task to the list
@@ -165,7 +165,6 @@ public class ControllerToDo  implements Initializable {
     }
 
     // A quick way to show or hide all items that represent every task
-    //TODO Hide saveChanges button when it's the done list showing
     public void toggleItems(boolean t){
         titleLabel.setVisible(t);
         creationLabel.setVisible(t);
@@ -307,6 +306,7 @@ public class ControllerToDo  implements Initializable {
             toggleLayout(true);
         }
         checkForEmptyList();
+        manageStats(-1);
     }
 
     /*Why Im saving the selectedTask in an aux variable instead of just using it to remove and add in lists:
@@ -375,6 +375,7 @@ public class ControllerToDo  implements Initializable {
         saveTasks(null);
         showStatus("Removed the task",SUCCESS);
         checkForEmptyList();
+        manageStats(-1);
     }
 
     public void openLink(MouseEvent e){
@@ -411,24 +412,30 @@ public class ControllerToDo  implements Initializable {
         titleLabel.setText(t);
     }
 
-
+    // -1 stands for only recalculate the amount of tasks in a list
     public void manageStats(int quantity){
         LocalDate now = LocalDate.now();
-        if(stats[0] == null){ // If there is not date at the array put the today and add a quantity(0)
-            stats[0] = now.format(f);
-            stats[1] = quantity+"";
-        }
-        else{
-            if(now.format(f).equals(stats[0])){ // If the date at the array is the same as today
-                int n = Integer.parseInt(stats[1])+quantity; // adds 1
-                stats[1] = n+""; // saves it
+        if(quantity != -1) {
+            if(stats[0] == null){ // If there is not date at the array put the today and add a quantity(0)
+                stats[0] = now.format(f);
+                stats[1] = quantity+"";
             }
             else{
-                stats[0] = now.format(f); // If not, put the today's date
-                stats[1] = quantity+""; // and the quantity
+                if(now.format(f).equals(stats[0])){ // If the date at the array is the same as today
+                    int n = Integer.parseInt(stats[1])+quantity; // adds 1
+                    stats[1] = n+""; // saves it
+                }
+                else{
+                    stats[0] = now.format(f); // If not, put the today's date
+                    stats[1] = quantity+""; // and the quantity
+                }
             }
         }
-        statLabel.setText("Tasks completed today: "+stats[1]); // Draw the stat
+
+        String m = "Amount of tasks: "+(todoShowing ? tasks.get(0).size() : tasks.get(1).size())
+                    + ". Completed today: "+stats[1];
+
+        statLabel.setText(m); // Draw the stat
     }
 
     public void openInfo(MouseEvent e) throws IOException{
