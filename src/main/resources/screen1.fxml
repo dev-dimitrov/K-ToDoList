@@ -5,11 +5,12 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControllerToDo">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.dimitrov.ControllerToDo">
    <children>
       <Label fx:id="versionLabel" alignment="CENTER_RIGHT" layoutX="412.0" layoutY="363.0" onMouseClicked="#openLink" prefHeight="18.0" prefWidth="166.0" text="github.com/dev-dimitrov   |   v3.0">
          <font>
@@ -42,11 +43,11 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </TextField>
-      <ImageView fx:id="deleteIcon" fitHeight="25.0" fitWidth="25.0" layoutX="554.0" layoutY="323.0" onMouseClicked="#removeTask" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="deleteIcon" fitHeight="25.0" fitWidth="25.0" layoutX="554.0" layoutY="323.0" onMouseClicked="#removeTask" pickOnBounds="true" preserveRatio="true"/>
       <Label fx:id="statLabel" alignment="CENTER_RIGHT" layoutX="324.0" layoutY="23.0" prefHeight="18.0" prefWidth="255.0" text="Task stats go here">
          <font>
             <Font name="System Italic" size="12.0" />
          </font></Label>
-      <ImageView fx:id="infoIcon" fitHeight="25.0" fitWidth="25.0" layoutX="169.0" layoutY="20.0" onMouseClicked="#openInfo" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="infoIcon" fitHeight="25.0" fitWidth="25.0" layoutX="169.0" layoutY="20.0" onMouseClicked="#openInfo" pickOnBounds="true" preserveRatio="true/">
    </children>
 </AnchorPane>

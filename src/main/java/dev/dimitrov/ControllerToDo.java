@@ -1,3 +1,5 @@
+package dev.dimitrov;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -90,8 +92,8 @@ public class ControllerToDo  implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         todoShowing = true;
-        Image i = new Image(getClass().getResourceAsStream("resources/delete-icon.png"));
-        Image i2 = new Image(getClass().getResourceAsStream("resources/info-icon.png"));
+        Image i = new Image(getClass().getResourceAsStream("/delete-icon.png"));
+        Image i2 = new Image(getClass().getResourceAsStream("/info-icon.png"));
         deleteIcon.setImage(i);
         infoIcon.setImage(i2);
         toggleItems(false);
@@ -250,7 +252,7 @@ public class ControllerToDo  implements Initializable {
             stats = (String[]) o.readObject();
 
         }
-        catch(IOException | ClassNotFoundException ex){
+        catch(NullPointerException | IOException | ClassNotFoundException ex){
             // If the load is failed, prepare the List of lists
             tasks = new ArrayList<>();
             tasks.add(new ArrayList<>());
@@ -270,6 +272,7 @@ public class ControllerToDo  implements Initializable {
             taskFile = b.readLine();
         }
         catch(IOException ex){
+            
             ex.printStackTrace();
         }
 
@@ -439,11 +442,11 @@ public class ControllerToDo  implements Initializable {
     }
 
     public void openInfo(MouseEvent e) throws IOException{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("resources/info.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/info.fxml"));
         root = loader.load();
         stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
         scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("resources/style.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }

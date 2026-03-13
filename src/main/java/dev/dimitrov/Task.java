@@ -1,9 +1,8 @@
-import javafx.collections.ObservableList;
+package dev.dimitrov;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 
 public class Task implements Serializable {
     public String title;

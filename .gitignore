@@ -1,3 +1,7 @@
 out/
 tasks.bin
 auto-jar.py
+target/
+.vscode/
+config.txt
+test/
