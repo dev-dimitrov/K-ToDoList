@@ -10,9 +10,9 @@ public class LauncherToDo extends Application {
     
     public void start(Stage primaryStage) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/screen1.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/"+Constants.SCREEN_FXML));
             Scene scene = new Scene(root);
-            scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("/"+Constants.CSS_FILE).toExternalForm());
             primaryStage.setScene(scene);
             primaryStage.show();
             primaryStage.setResizable(false);

@@ -8,7 +8,7 @@ public class Task implements Serializable {
     public String title;
     public String description;
     public LocalDateTime creation;
-    public static DateTimeFormatter f = DateTimeFormatter.ofPattern("y-MM-dd HH:mm:ss");
+    public static DateTimeFormatter f = DateTimeFormatter.ofPattern(Constants.DATE_PATTERN);
     public Task(String t, String d, LocalDateTime ldt){
         title = t;
         description = d;

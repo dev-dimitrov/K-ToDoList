@@ -73,9 +73,7 @@ public class ControllerToDo  implements Initializable {
 
     private boolean todoShowing;
 
-    private static final String ERROR = "#b80f04";
 
-    private static final String SUCCESS = "#04a429";
 
     private String[] stats = new String[2];
 
@@ -128,7 +126,7 @@ public class ControllerToDo  implements Initializable {
         String input = inputTask.getText();
 
         if(input.isBlank()){
-            showStatus("Please type a title", ERROR);
+            showStatus("Please type a title", Constants.ERROR);
         }
         else if(input.substring(0,1).equals("@") && input.length() >1){
             String tasks[] = input.substring(1).split("@"); // Removing the first at
@@ -138,7 +136,7 @@ public class ControllerToDo  implements Initializable {
                 }
 
             }
-            showStatus("Added "+tasks.length+" at once",SUCCESS);
+            showStatus("Added "+tasks.length+" at once",Constants.SUCCESS);
             inputTask.clear();
         }
         else{
@@ -226,10 +224,10 @@ public class ControllerToDo  implements Initializable {
         }
         catch (IOException ex) {
             ex.printStackTrace();
-            showStatus("Saving failed", ERROR);
+            showStatus("Saving failed", Constants.ERROR);
         }
         if(status == 0 && e != null){
-            showStatus("Changes  saved!",SUCCESS);
+            showStatus("Changes  saved!",Constants.SUCCESS);
         }
     }
 
@@ -246,7 +244,7 @@ public class ControllerToDo  implements Initializable {
             else{
                 taskList.getItems().addAll(l.get(1));
             }
-            showStatus("Loaded from "+taskFile,SUCCESS);
+            showStatus("Loaded from "+taskFile,Constants.SUCCESS);
             checkForEmptyList();
 
             stats = (String[]) o.readObject();
@@ -258,7 +256,7 @@ public class ControllerToDo  implements Initializable {
             tasks.add(new ArrayList<>());
             tasks.add(new ArrayList<>());
             checkForEmptyList();
-            showStatus("Couldn't load from "+taskFile+", saving now.",ERROR);
+            showStatus("Couldn't load from "+taskFile+", saving now.",Constants.ERROR);
         }
         finally {
             manageStats(0); //Managing stats anyways
@@ -267,7 +265,7 @@ public class ControllerToDo  implements Initializable {
     }
 
     public void loadConfig(){
-        try(BufferedReader b = new BufferedReader(new FileReader("config.txt"))){
+        try(BufferedReader b = new BufferedReader(new FileReader(Constants.CONFIG_FILE))){
             b.readLine();
             taskFile = b.readLine();
         }
@@ -321,7 +319,7 @@ public class ControllerToDo  implements Initializable {
         tasks.get(0).remove(aux);
         tasks.get(1).add(aux);
         manageStats(1);
-        showStatus("Moved to done list!",SUCCESS);
+        showStatus("Moved to done list!",Constants.SUCCESS);
         saveTasks(null);
         checkForEmptyList();
     }
@@ -332,7 +330,7 @@ public class ControllerToDo  implements Initializable {
         tasks.get(1).remove(aux);
         tasks.get(0).add(aux);
         saveTasks(null);
-        showStatus("Moved to do list!",SUCCESS);
+        showStatus("Moved to do list!",Constants.SUCCESS);
         checkForEmptyList();
     }
 
@@ -342,7 +340,7 @@ public class ControllerToDo  implements Initializable {
             toggleTaskNameInput(true);
         }
         else{
-            showStatus("You can't rename a done task...",ERROR);
+            showStatus("You can't rename a done task...",Constants.ERROR);
         }
     }
 
@@ -360,7 +358,7 @@ public class ControllerToDo  implements Initializable {
             saveTasks(e);
         }
         else{
-            showStatus("Please type a title", ERROR);
+            showStatus("Please type a title", Constants.ERROR);
         }
 
     }
@@ -376,13 +374,13 @@ public class ControllerToDo  implements Initializable {
         taskList.getItems().remove(aux);
         tasks.get(todoShowing ? 0 : 1).remove(aux);
         saveTasks(null);
-        showStatus("Removed the task",SUCCESS);
+        showStatus("Removed the task",Constants.SUCCESS);
         checkForEmptyList();
         manageStats(-1);
     }
 
     public void openLink(MouseEvent e){
-        linkOpener("https://github.com/dev-dimitrov");
+        linkOpener(Constants.GITHUB_LINK);
     }
 
     public void checkForEmptyList(){
@@ -442,11 +440,11 @@ public class ControllerToDo  implements Initializable {
     }
 
     public void openInfo(MouseEvent e) throws IOException{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/info.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/"+Constants.INFO_FXML));
         root = loader.load();
         stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
         scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/"+Constants.CSS_FILE).toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
