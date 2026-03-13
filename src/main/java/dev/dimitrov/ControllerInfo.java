@@ -33,24 +33,24 @@ public class ControllerInfo implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Image i = new Image(getClass().getResourceAsStream("/logo.png"));
+        Image i = new Image(getClass().getResourceAsStream("/"+Constants.LOGO_IMG));
         imageLogo.setImage(i);
     }
 
 
     public void openApp(ActionEvent e) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/screen1.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/"+Constants.SCREEN_FXML));
         root = loader.load();
         stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
         scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/"+Constants.CSS_FILE).toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
 
     public void openLink(ActionEvent e){
         Hyperlink a = (Hyperlink) e.getSource();
-        String link = a.getText().contains("Delete") ? "https://icons8.com/icon/67884/delete" : "https://icons8.com/icon/59817/info";
+        String link = a.getText().contains("Delete") ? Constants.DEL_ICON_LINK : Constants.INFO_ICON_LINK;
         ControllerToDo.linkOpener(link);
     }
 }
