@@ -232,6 +232,7 @@ public class ControllerToDo  implements Initializable {
     }
 
 
+    @SuppressWarnings("unchecked")
     public void loadTasks(){
         try(ObjectInputStream o = new ObjectInputStream(new FileInputStream(taskFile))){
             ArrayList<ArrayList<Task>> l = (ArrayList<ArrayList<Task>>)o.readObject();
