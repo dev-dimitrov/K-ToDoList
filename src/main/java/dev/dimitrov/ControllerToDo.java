@@ -444,7 +444,7 @@ public class ControllerToDo  implements Initializable {
         root = loader.load();
         stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
         scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("/"+Constants.CSS_FILE).toExternalForm());
+        scene.getStylesheets ().add(getClass().getResource("/"+Constants.CSS_FILE).toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
@@ -452,8 +452,12 @@ public class ControllerToDo  implements Initializable {
     /*Used in both controllers*/
     public static void linkOpener(String link) {
         try {
-            if (System.getProperty("os.name").contains("Windows")) {
+            String osname = System.getProperty("os.name");
+            if (osname.contains("Windows")) {
                 new ProcessBuilder("cmd","/c","start "+link).inheritIO().start().waitFor();
+            }
+            else if(osname.contains("Mac OS")){
+                new ProcessBuilder("open",link).start();
             }
             else{
                 new ProcessBuilder("xdg-open",link).start();
