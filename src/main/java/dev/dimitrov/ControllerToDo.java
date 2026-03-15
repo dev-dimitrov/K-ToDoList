@@ -1,5 +1,6 @@
 package dev.dimitrov;
 
+import javafx.animation.PauseTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -12,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -278,14 +280,6 @@ public class ControllerToDo  implements Initializable {
         loadTasks();
     }
 
-    // Shows a message with an hexColor
-    public void showStatus(String msg, String hexColor){
-        statusLabel.setVisible(false);
-        statusLabel.setText(msg);
-        statusLabel.setStyle("-fx-text-fill: "+hexColor);
-        statusLabel.setVisible(true);
-    }
-
     public void switchTasksList(ActionEvent e){
         toggleItems(false); // Hide everything
 
@@ -467,5 +461,17 @@ public class ControllerToDo  implements Initializable {
         } catch (IOException | InterruptedException ex) {
             System.out.println(ex);
         }
+    }
+    
+    // Shows a message with an hexColor, the message disappears after 3 seconds
+    public void showStatus(String msg, String color) {
+        statusLabel.setVisible(false);
+        statusLabel.setText(msg);
+        statusLabel.setVisible(true);
+        statusLabel.setStyle("-fx-text-fill: " + color);
+
+        PauseTransition delay = new PauseTransition(Duration.seconds(3));
+        delay.setOnFinished(e -> statusLabel.setVisible(false));
+        delay.play();
     }
 }
