@@ -92,6 +92,7 @@ public class ControllerToDo  implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         todoShowing = true;
+        descTextArea.setEditable(todoShowing);
         Image i = new Image(getClass().getResourceAsStream("/delete-icon.png"));
         Image i2 = new Image(getClass().getResourceAsStream("/info-icon.png"));
         deleteIcon.setImage(i);
@@ -151,7 +152,7 @@ public class ControllerToDo  implements Initializable {
 
     // Adds a task to the list
     public void addTask(String task){
-        Task t = new Task(task,"No desc", LocalDateTime.now());
+        Task t = new Task(task,null, LocalDateTime.now());
 
         // Adding the task in
         if(todoShowing){
@@ -188,7 +189,7 @@ public class ControllerToDo  implements Initializable {
     // Changes the look and behavior of the markAsDoneButton depending if tis showing done or to do list
     // true is for the done list and false is for the to do list
     public void toggleLayout(boolean t){
-        descTextArea.setDisable(!t);
+        descTextArea.setEditable(!!t);
         if(t){
             markAsDoneButton.setText("Mark as done");
             markAsDoneButton.setOnAction(e -> markAsDone(e));
