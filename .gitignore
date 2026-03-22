@@ -6,3 +6,4 @@ config.txt
 test/
 *.bin
 .*
+config.txt

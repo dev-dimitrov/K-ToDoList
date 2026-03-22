@@ -261,6 +261,7 @@ public class ControllerToDo  implements Initializable {
             tasks.add(new ArrayList<>());
             checkForEmptyList();
             showStatus("Couldn't load from "+taskFile+", saving now.",Constants.ERROR);
+            ex.printStackTrace();
         }
         finally {
             manageStats(0); //Managing stats anyways
